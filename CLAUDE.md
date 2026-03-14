@@ -37,7 +37,7 @@ docker compose up --build -d
 # 백엔드 의존성 설치
 cd backend && yarn install
 
-# 백엔드 개발 서버 실행
+# 백엔드 개발 서버 실행 (포트 3003)
 cd backend && yarn start:dev
 
 # 백엔드 테스트
