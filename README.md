@@ -30,7 +30,11 @@
 
 | Layer | Stack |
 |-------|-------|
-| Backend | Go, Fiber v2 |
+| Backend | NestJS, Fastify |
+| Database | PostgreSQL |
+| Cache / Queue | Redis, BullMQ |
+| Storage | S3 + CDN |
+| Media Processing | FFmpeg |
 | Frontend | TBD |
 | Proxy | Nginx |
 | Infra | Docker Compose |
@@ -49,7 +53,7 @@ curl http://localhost/api/health
 
 ```bash
 # 백엔드만 실행
-cd backend && go run cmd/server/main.go
+cd backend && yarn install && yarn start:dev
 
 # API 문서 미리보기 (포트 4000)
 npx @redocly/cli preview -p 4000
