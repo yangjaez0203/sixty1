@@ -8,6 +8,6 @@ tags:
   - name: system
     description: System related endpoints
 paths:
-  /health:
+  /system/health:
     get:
       $ref: './system/health.yaml'
