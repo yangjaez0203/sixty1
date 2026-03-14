@@ -4,15 +4,20 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**hearoom** — 모노레포 구조의 웹 애플리케이션. Go 백엔드 + 프론트엔드(미정).
+**hearoom** — 모노레포 구조의 웹 애플리케이션. NestJS 백엔드 + 프론트엔드(미정).
 
 ## Architecture
 
 ```
-backend/           # Go (Fiber v2) 서버 — 포트 8080
-├── cmd/server/    # 엔트리포인트 (main.go)
-├── internal/      # 비공개 패키지 (config, handlers, models)
-└── pkg/           # 공개 패키지
+backend/                    # NestJS (Fastify) 서버 — 포트 8080
+├── src/
+│   ├── main.ts             # 엔트리포인트
+│   ├── app.module.ts       # 루트 모듈
+│   ├── config/             # 환경 설정
+│   ├── modules/            # 도메인 모듈 (auth, room, track 등)
+│   └── workers/            # FFmpeg 워커 (영상 처리)
+├── test/                   # e2e 테스트
+└── package.json
 frontend/          # 프론트엔드 (미설정)
 nginx/             # Nginx 리버스 프록시 설정
 docs/              # API 문서 (OpenAPI 3.0 + Redocly)
@@ -29,17 +34,20 @@ docs/              # API 문서 (OpenAPI 3.0 + Redocly)
 # Docker Compose로 전체 실행
 docker compose up --build -d
 
-# 백엔드만 실행
-cd backend && go run cmd/server/main.go
+# 백엔드 의존성 설치
+cd backend && yarn install
+
+# 백엔드 개발 서버 실행 (포트 3003)
+cd backend && yarn start:dev
 
 # 백엔드 테스트
-cd backend && go test ./...
+cd backend && yarn test
 
-# 단일 패키지 테스트
-cd backend && go test ./internal/handlers/...
+# e2e 테스트
+cd backend && yarn test:e2e
 
-# Go 포맷팅
-cd backend && gofmt -w .
+# 린트
+cd backend && yarn lint
 
 # API 문서 미리보기
 npx @redocly/cli preview -p 4000
@@ -57,19 +65,23 @@ npx @redocly/cli preview -p 4000
 
 ## Tech Stack
 
-- **Backend:** Go 1.25, Fiber v2, UUID
+- **Backend:** Node.js, NestJS, Fastify adapter
+- **Database:** PostgreSQL
+- **Cache / Queue:** Redis, BullMQ
+- **Storage:** S3 + CDN
+- **Media:** FFmpeg 워커, MP4 출력 (HLS 확장 예정)
 - **Frontend:** TBD
 
 ## CI/CD
 
 ### PR Check (`.github/workflows/pr-check.yml`)
 - PR 오픈 시 변경 경로 기반 조건부 빌드
-- `backend/**` → Go 빌드 + 테스트
+- `backend/**` → Node.js 빌드 + 테스트 (yarn install → yarn build → yarn test)
 - `docs/**` → Redocly lint + 문서 빌드
 - `frontend/**` → 미설정 (프레임워크 선택 후 추가)
 
 ### Deploy (`.github/workflows/deploy.yml`)
 - prod 브랜치에서 서비스별 태그 push 시 배포
 - 태그 형식: `backend/v1.0.0`, `frontend/v1.0.0`
-- 파이프라인: verify (prod 브랜치 검증) → build (빌드 + 테스트) → deploy (SSH)
+- 파이프라인: verify (prod 브랜치 검증) → build (빌드 + 테스트) → deploy (SSM)
 - 서버 경로: `/hearoom`
