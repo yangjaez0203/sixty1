@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { SystemController } from './system.controller';
+import { ApiResponse } from '../../../common/dto/api-response.dto';
 
 describe('SystemController', () => {
   let controller: SystemController;
@@ -13,8 +14,8 @@ describe('SystemController', () => {
   });
 
   describe('GET /system/health', () => {
-    it('should return status OK', () => {
-      expect(controller.health()).toEqual({ status: 'OK' });
+    it('should return status OK wrapped in ApiResponse', () => {
+      expect(controller.health()).toEqual(ApiResponse.of({ status: 'OK' }));
     });
   });
 });
