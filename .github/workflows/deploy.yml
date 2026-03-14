@@ -42,18 +42,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Build backend
+      - name: Setup Node.js
         if: needs.verify.outputs.service == 'backend'
-        uses: actions/setup-go@v5
+        uses: actions/setup-node@v4
         with:
-          go-version: '1.25.7'
+          node-version: '22'
 
       - name: Test backend
         if: needs.verify.outputs.service == 'backend'
         working-directory: backend
         run: |
-          go build ./cmd/server
-          go test ./...
+          yarn install --frozen-lockfile
+          yarn build
+          yarn test
 
       - name: Build frontend
         if: needs.verify.outputs.service == 'frontend'
@@ -115,7 +116,7 @@ jobs:
           COMMAND_ID=$(aws ssm send-command \
             --instance-ids "${{ secrets.INSTANCE_ID }}" \
             --document-name "AWS-RunShellScript" \
-            --parameters 'commands=["for i in 1 2 3 4 5; do curl -sf http://localhost/api/health && exit 0; echo \"Waiting... ($i/5)\"; sleep 3; done; echo \"Health check failed\"; exit 1"]' \
+            --parameters 'commands=["for i in 1 2 3 4 5; do curl -sf http://localhost/api/system/health && exit 0; echo \"Waiting... ($i/5)\"; sleep 3; done; echo \"Health check failed\"; exit 1"]' \
             --region ap-northeast-2 \
             --query "Command.CommandId" \
             --output text)
