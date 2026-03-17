@@ -90,6 +90,12 @@ pnpm install
 cp .env.example .env.local
 ```
 
+| 파일 | 용도 |
+|------|------|
+| `.env.local` | 로컬 개발용 (git 제외) |
+| `.env` | 서버 배포용 (git 제외) |
+| `.env.example` | 팀원용 템플릿 (git 포함) |
+
 | 변수명 | 설명 |
 |--------|------|
 | `DATABASE_URL` | PostgreSQL 연결 문자열 |
