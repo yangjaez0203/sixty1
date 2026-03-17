@@ -47,6 +47,9 @@ yarn-error.log*
 Thumbs.db
 ehthumbs.db
 
+# Prisma
+backend/prisma/seed/
+
 # Misc
 *.swp
 *.swo
