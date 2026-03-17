@@ -13,5 +13,7 @@ services:
       context: ./backend
     env_file:
       - ./backend/.env
+    environment:
+      - PORT=8080
     expose:
       - "8080"
