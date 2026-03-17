@@ -46,7 +46,7 @@ cd ios && pod install && cd ..
 3. 실행:
 
 ```bash
-npx expo run:ios --device
+pnpm run:ios --device
 ```
 
 4. 연결된 기기 목록에서 본인 iPhone 선택
@@ -76,7 +76,7 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 4. 실행:
 
 ```bash
-npx expo run:android --device
+pnpm android
 ```
 
 ## 4. 개발 서버 재시작
@@ -84,7 +84,7 @@ npx expo run:android --device
 앱이 기기에 설치된 이후에는 네이티브 빌드 없이 JS 번들만 갱신할 수 있습니다:
 
 ```bash
-npx expo start --dev-client
+pnpm start --dev-client
 ```
 
 기기에서 앱을 열면 자동으로 개발 서버에 연결됩니다.
@@ -139,7 +139,7 @@ cd ios && pod deintegrate && pod install && cd ..
 ### Metro 번들러 캐시 문제
 
 ```bash
-npx expo start --dev-client --clear
+pnpm start --dev-client --clear
 ```
 
 ### `pod install` 시 "Missing required attribute `source`"
