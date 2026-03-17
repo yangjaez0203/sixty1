@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**hearoom** — 모노레포 구조의 웹 애플리케이션. NestJS 백엔드 + 프론트엔드(미정).
+**sixty1** — 모노레포 구조의 웹 애플리케이션. NestJS 백엔드 + 프론트엔드(미정).
 
 ## Architecture
 
@@ -84,4 +84,4 @@ npx @redocly/cli preview -p 4000
 - prod 브랜치에서 서비스별 태그 push 시 배포
 - 태그 형식: `backend/v1.0.0`, `frontend/v1.0.0`
 - 파이프라인: verify (prod 브랜치 검증) → build (빌드 + 테스트) → deploy (SSM)
-- 서버 경로: `/hearoom`
+- 서버 경로: `/sixty1`
