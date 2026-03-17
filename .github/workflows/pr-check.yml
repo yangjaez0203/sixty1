@@ -42,18 +42,6 @@ jobs:
       - run: pnpm build
       - run: pnpm test
 
-  build-frontend:
-    needs: changes
-    if: needs.changes.outputs.frontend == 'true'
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: frontend
-    steps:
-      - uses: actions/checkout@v4
-      # TODO: 프레임워크 선택 후 빌드 스텝 추가
-      - run: echo "Frontend build not configured yet"
-
   build-docs:
     needs: changes
     if: needs.changes.outputs.docs == 'true'

@@ -4,7 +4,6 @@ on:
   push:
     tags:
       - 'backend/v*'
-      - 'frontend/v*'
 
 jobs:
   verify:
@@ -61,11 +60,6 @@ jobs:
           pnpm install --frozen-lockfile
           pnpm build
           pnpm test
-
-      - name: Build frontend
-        if: needs.verify.outputs.service == 'frontend'
-        working-directory: frontend
-        run: echo "Frontend build not configured yet"
 
       - name: Build Docker image
         run: docker compose build ${{ needs.verify.outputs.service }}
