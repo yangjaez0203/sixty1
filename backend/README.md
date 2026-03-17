@@ -114,6 +114,8 @@ docker compose -f docker-compose.local.yml up -d
 
 ### 4. DB 마이그레이션
 
+`prisma/schema.prisma`에 모델을 작성하거나 변경한 후 아래 명령어로 테이블에 반영합니다.
+
 ```bash
 pnpm prisma:migrate
 ```
@@ -157,6 +159,6 @@ pnpm format
 # Prisma 클라이언트 생성
 pnpm prisma:generate
 
-# DB 마이그레이션
+# 스키마 변경 후 DB에 반영
 pnpm prisma:migrate
 ```
