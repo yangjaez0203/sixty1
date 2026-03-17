@@ -112,12 +112,6 @@ docker compose up --build -d
 
 Nginx를 통해 `/api/*` 요청이 백엔드(8080)로 라우팅됩니다.
 
-## API 엔드포인트
-
-| Method | Path | 설명 |
-|--------|------|------|
-| GET | `/system/health` | 헬스체크 |
-
 ## 테스트
 
 ```bash
