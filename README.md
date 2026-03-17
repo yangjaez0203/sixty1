@@ -61,6 +61,33 @@
 
 ---
 
+---
+
+## 🚀 Getting Started
+
+### API 문서 미리보기
+
+```bash
+cd docs && npx @redocly/cli preview -p 4000
+```
+
+실행 후 http://localhost:4000 에서 API 문서를 확인할 수 있습니다.
+
+### 전체 서비스 실행 (Docker Compose)
+
+```bash
+docker compose up --build -d
+```
+
+### 백엔드 개발 서버
+
+```bash
+cd backend && pnpm install
+cd backend && pnpm start:dev
+```
+
+---
+
 # 주요 용어
 
 - 로그
