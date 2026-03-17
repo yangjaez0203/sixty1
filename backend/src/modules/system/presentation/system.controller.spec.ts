@@ -14,7 +14,7 @@ describe('SystemController', () => {
   });
 
   describe('GET /system/health', () => {
-    it('should return status OK wrapped in ApiResponse', () => {
+    it('ApiResponse로 감싸진 status OK를 반환한다', () => {
       expect(controller.health()).toEqual(ApiResponse.of({ status: 'OK' }));
     });
   });
