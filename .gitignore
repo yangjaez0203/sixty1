@@ -4,8 +4,6 @@ dist/
 .cache/
 *.tsbuildinfo
 
-# Prisma
-generated/
 
 # Yarn
 .yarn/cache
