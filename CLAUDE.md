@@ -18,7 +18,7 @@ backend/                    # NestJS (Fastify) 서버 — 포트 8080
 │   └── workers/            # FFmpeg 워커 (영상 처리)
 ├── test/                   # e2e 테스트
 └── package.json
-frontend/          # 프론트엔드 (미설정)
+frontend/          # 모바일 앱 (React Native / Expo)
 nginx/             # Nginx 리버스 프록시 설정
 docs/              # API 문서 (OpenAPI 3.0 + Redocly)
 ```
@@ -26,7 +26,6 @@ docs/              # API 문서 (OpenAPI 3.0 + Redocly)
 ### 라우팅 (Nginx)
 
 - `/api/*` → backend:8080 (prefix 제거)
-- `/*` → frontend:3000
 
 ## Build & Run
 
