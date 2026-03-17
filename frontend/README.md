@@ -23,15 +23,10 @@ pnpm install
 
 ## 2. iOS 셋업
 
-### Apple 개발자 계정 설정 (처음 한 번)
+### Xcode에 Apple ID 등록 (처음 한 번)
 
 1. Xcode 열기
 2. **Xcode → Settings → Accounts** 에서 Apple ID 추가 (무료 계정 OK)
-3. `ios/Sixty1.xcworkspace`를 Xcode로 열기
-4. 좌측 프로젝트 네비게이터에서 **Sixty1** 선택
-5. **Signing & Capabilities** 탭에서:
-   - **Team**: 본인 계정 선택
-   - **Bundle Identifier**: `com.sixty1.app` 이 중복된다면 고유한 값으로 변경 (예: `com.yourname.sixty1`)
 
 ### 기기에서 실행
 
@@ -40,11 +35,16 @@ pnpm install
 3. 실행:
 
 ```bash
-pnpm run:ios --device
+pnpm ios
 ```
 
 4. 연결된 기기 목록에서 본인 iPhone 선택
-5. 처음 실행 시 iPhone에서 **설정 → 일반 → VPN 및 기기 관리 → 개발자 앱** 에서 신뢰 허용
+5. 첫 빌드 시 Signing 에러가 나면 → `ios/Sixty1.xcworkspace`를 Xcode로 열고:
+   - 좌측 프로젝트 네비게이터에서 **Sixty1** 선택
+   - **Signing & Capabilities** 탭 → **Team**: 본인 계정 선택
+   - **Bundle Identifier**가 중복이면 고유한 값으로 변경 (예: `com.yourname.sixty1`)
+   - 저장 후 다시 `pnpm ios` 실행
+6. 처음 실행 시 iPhone에서 **설정 → 일반 → VPN 및 기기 관리 → 개발자 앱** 에서 신뢰 허용
 
 ## 3. Android 셋업
 
@@ -125,6 +125,13 @@ rm -rf ios/Pods ios/build
 pnpm ios
 ```
 
+그래도 안 되면 Xcode의 DerivedData도 정리:
+
+```bash
+rm -rf ~/Library/Developer/Xcode/DerivedData
+pnpm ios
+```
+
 ### 기기를 인식하지 못할 때
 
 - USB 케이블이 **데이터 전송 지원** 케이블인지 확인 (충전 전용 불가)
@@ -149,6 +156,16 @@ mv ~/Library/Mobile\ Documents/com~apple~CloudDocs/sixty1 ~/dev/sixty1
 
 cd ~/dev/sixty1/frontend && pnpm ios
 ```
+
+### "iOS X.X is not installed" 에러
+
+iPhone의 iOS 버전을 Xcode가 지원하지 않을 때 발생합니다. 베타 iOS가 설치된 경우 Xcode도 베타 버전이 필요합니다.
+
+- [developer.apple.com/download](https://developer.apple.com/download/) 에서 Xcode 베타 다운로드
+
+### "Developer Mode disabled" 에러
+
+iPhone에서 **설정 → 개인정보 보호 및 보안 → 개발자 모드** 를 활성화하세요. 재시작 후 다시 `pnpm ios` 실행하면 됩니다.
 
 ### Google 로그인이 작동하지 않을 때
 
