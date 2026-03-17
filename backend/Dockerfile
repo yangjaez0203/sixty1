@@ -1,16 +1,18 @@
 FROM node:22-alpine AS builder
 
 WORKDIR /app
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+RUN corepack enable
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
 COPY . .
-RUN yarn build
+RUN pnpm build
 
 FROM node:22-alpine
 
 WORKDIR /app
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile --production
+RUN corepack enable
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile --prod
 COPY --from=builder /app/dist ./dist
 EXPOSE 8080
 CMD ["node", "dist/main"]

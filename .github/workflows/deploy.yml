@@ -48,13 +48,19 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Setup pnpm
+        if: needs.verify.outputs.service == 'backend'
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
       - name: Test backend
         if: needs.verify.outputs.service == 'backend'
         working-directory: backend
         run: |
-          yarn install --frozen-lockfile
-          yarn build
-          yarn test
+          pnpm install --frozen-lockfile
+          pnpm build
+          pnpm test
 
       - name: Build frontend
         if: needs.verify.outputs.service == 'frontend'
