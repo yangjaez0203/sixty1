@@ -1,8 +1,9 @@
 tags:
   - system
-summary: /health
+summary: /system/health
 description: Retrieve the current health status of the Hearoom system.
 operationId: getSystemHealth
+security: []
 responses:
   '200':
     description: Successful response with system health status
@@ -13,4 +14,6 @@ responses:
           properties:
             status:
               type: string
-              example: "ok"
+              example: "OK"
+  '500':
+    description: Internal server error
