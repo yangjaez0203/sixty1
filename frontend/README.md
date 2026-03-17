@@ -33,12 +33,6 @@ pnpm install
    - **Team**: 본인 계정 선택
    - **Bundle Identifier**: `com.sixty1.app` 이 중복된다면 고유한 값으로 변경 (예: `com.yourname.sixty1`)
 
-### iOS Pod 설치
-
-```bash
-cd ios && pod install && cd ..
-```
-
 ### 기기에서 실행
 
 1. iPhone을 USB로 Mac에 연결
@@ -123,11 +117,12 @@ frontend/
 
 ## 트러블슈팅
 
-### `expo run:ios` 빌드 실패
+### `pnpm ios` 빌드 실패
 
 ```bash
-# Pod 캐시 정리 후 재설치
-cd ios && pod deintegrate && pod install && cd ..
+# ios 폴더 초기화 후 재시도
+rm -rf ios/Pods ios/build
+pnpm ios
 ```
 
 ### 기기를 인식하지 못할 때
@@ -142,7 +137,7 @@ cd ios && pod deintegrate && pod install && cd ..
 pnpm start --dev-client --clear
 ```
 
-### `pod install` 시 "Missing required attribute `source`"
+### iOS 빌드 시 "Missing required attribute `source`"
 
 프로젝트가 **iCloud Drive 폴더** 안에 있으면 발생합니다. iCloud Drive 경로에 띄어쓰기가 포함되어 있어서 빌드 도구가 경로를 제대로 인식하지 못합니다.
 
@@ -152,7 +147,7 @@ pnpm start --dev-client --clear
 # iCloud 바깥의 일반 폴더로 이동
 mv ~/Library/Mobile\ Documents/com~apple~CloudDocs/sixty1 ~/dev/sixty1
 
-cd ~/dev/sixty1/frontend/ios && pod install
+cd ~/dev/sixty1/frontend && pnpm ios
 ```
 
 ### Google 로그인이 작동하지 않을 때
