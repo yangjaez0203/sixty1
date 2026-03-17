@@ -93,7 +93,7 @@ pnpm install
 |--------|------|
 | `DATABASE_URL` | PostgreSQL 연결 문자열 |
 
-### 3. 로컬 DB 실행
+### 3. 로컬 인프라 실행
 
 프로젝트 루트에서 실행합니다.
 
@@ -104,6 +104,7 @@ docker compose -f docker-compose.local.yml up -d
 | 서비스 | 포트 | 설명 |
 |--------|------|------|
 | PostgreSQL | 5432 | `sixty1` DB, user/password: `sixty1` |
+| Redis | 6379 | (추후 추가 예정) |
 
 ### 4. DB 마이그레이션
 
