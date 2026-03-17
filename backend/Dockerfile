@@ -1,14 +1,16 @@
-FROM golang:1.25.7-alpine3.23 AS builder
+FROM node:22-alpine AS builder
 
 WORKDIR /app
-COPY go.mod go.sum ./
-RUN go mod download
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
 COPY . .
-RUN go build -o server ./cmd/server
+RUN yarn build
 
-FROM alpine:3.23
+FROM node:22-alpine
 
 WORKDIR /app
-COPY --from=builder /app/server .
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile --production
+COPY --from=builder /app/dist ./dist
 EXPOSE 8080
-CMD ["./server"]
+CMD ["node", "dist/main"]

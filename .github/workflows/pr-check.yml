@@ -32,11 +32,12 @@ jobs:
         working-directory: backend
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-node@v4
         with:
-          go-version: '1.25.7'
-      - run: go build ./cmd/server
-      - run: go test ./...
+          node-version: '22'
+      - run: yarn install --frozen-lockfile
+      - run: yarn build
+      - run: yarn test
 
   build-frontend:
     needs: changes
