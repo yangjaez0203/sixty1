@@ -21,6 +21,7 @@ services:
     build:
       context: ./frontend
     env_file:
-      - ./frontend/.env
+      - path: ./frontend/.env
+        required: false
     expose:
       - "3000"
