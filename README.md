@@ -79,13 +79,6 @@ cd docs && npx @redocly/cli preview -p 4000
 docker compose up --build -d
 ```
 
-### 백엔드 개발 서버
-
-```bash
-cd backend && pnpm install
-cd backend && pnpm start:dev
-```
-
 ---
 
 # 주요 용어

@@ -48,6 +48,18 @@ modules/{domain}/
 └── infrastructure/      # Repository 구현체, 외부 연동
 ```
 
+## 컨벤션
+
+### 테스트
+
+- 테스트 설명(`describe`, `it`)은 한글로 작성합니다.
+
+```typescript
+describe('유저 서비스', () => {
+  it('존재하지 않는 유저 조회 시 예외를 던진다', () => { ... });
+});
+```
+
 ## 시작하기
 
 ### 사전 요구사항
@@ -57,6 +69,8 @@ modules/{domain}/
 - Docker (PostgreSQL, Redis 실행용)
 
 ### 의존성 설치
+
+/backend 디렉토리에서 다음 명령어를 실행하여 의존성을 설치합니다.
 
 ```bash
 pnpm install
