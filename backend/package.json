@@ -10,6 +10,7 @@
     "build": "prisma generate && nest build",
     "prisma:generate": "dotenv -e .env.local -- prisma generate",
     "prisma:migrate": "dotenv -e .env.local -- prisma migrate dev",
+    "prisma:seed": "dotenv -e .env.local -- ts-node prisma/seed/index.ts",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "dotenv -e .env.local -- nest start --watch",
