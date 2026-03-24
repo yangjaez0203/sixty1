@@ -15,12 +15,17 @@ sixty1 백엔드 서버 — NestJS + Fastify 기반 REST API 서버입니다.
 
 ```
 backend/
+├── prisma/
+│   └── schema.prisma            # Prisma 스키마 (모델 정의)
 ├── src/
 │   ├── main.ts                  # 엔트리포인트 (포트 3003)
 │   ├── app.module.ts            # 루트 모듈
 │   ├── common/
-│   │   └── dto/
-│   │       └── api-response.dto.ts   # 공통 응답 래퍼
+│   │   ├── dto/
+│   │   │   └── api-response.dto.ts   # 공통 응답 래퍼
+│   │   └── prisma/
+│   │       ├── prisma.module.ts      # PrismaModule (@Global)
+│   │       └── prisma.service.ts     # PrismaClient 래퍼
 │   └── modules/                 # 도메인 모듈
 │       └── system/              # 시스템 (헬스체크 등)
 │           ├── system.module.ts
@@ -31,6 +36,7 @@ backend/
 │               └── system.controller.spec.ts
 ├── test/                        # e2e 테스트
 │   └── jest-e2e.json
+├── prisma.config.ts             # Prisma 연결 설정
 ├── package.json
 └── tsconfig.json
 ```
@@ -66,51 +72,55 @@ describe('유저 서비스', () => {
 
 - Node.js 22+
 - pnpm
-- Docker (PostgreSQL, Redis 실행용)
+- Docker
 
-### 의존성 설치
+### 1. 의존성 설치
 
-/backend 디렉토리에서 다음 명령어를 실행하여 의존성을 설치합니다.
+`/backend` 디렉토리에서 실행합니다.
 
 ```bash
 pnpm install
 ```
 
-### 환경 변수 설정
+### 2. 환경 변수 확인
 
-`.env.example`을 복사하여 `.env` 파일을 생성합니다.
+| 파일 | 용도 | Git |
+|------|------|-----|
+| `.env.local` | 로컬 개발용 | 포함 |
+| `.env` | 서버 배포용 | 제외 |
 
-```bash
-cp .env.example .env
-```
+| 변수명 | 설명 |
+|--------|------|
+| `DATABASE_URL` | PostgreSQL 연결 문자열 |
 
-| 변수명 | 설명 | 기본값 |
-|--------|------|--------|
-| `PORT` | 서버 포트 | `3003` |
-| `DATABASE_URL` | PostgreSQL 연결 문자열 | - |
-| `REDIS_URL` | Redis 연결 문자열 | - |
-
-### 개발 서버 실행
-
-```bash
-# 개발 서버 (watch 모드)
-pnpm start:dev
-
-# 일반 실행
-pnpm start
-```
-
-서버가 `http://localhost:3003` 에서 실행됩니다.
-
-### Docker Compose로 전체 실행
+### 3. 로컬 인프라 실행
 
 프로젝트 루트에서 실행합니다.
 
 ```bash
-docker compose up --build -d
+docker compose -f docker-compose.local.yml up -d
 ```
 
-Nginx를 통해 `/api/*` 요청이 백엔드(8080)로 라우팅됩니다.
+| 서비스 | 포트 | 설명 |
+|--------|------|------|
+| PostgreSQL | 5432 | `sixty1` DB, user/password: `sixty1` |
+| Redis | 6379 | (추후 추가 예정) |
+
+### 4. DB 마이그레이션
+
+`prisma/schema.prisma`에 모델을 작성하거나 변경한 후 `/backend` 디렉토리에서 아래 명령어로 테이블에 반영합니다.
+
+```bash
+pnpm prisma:migrate
+```
+
+### 5. 개발 서버 실행
+
+```bash
+pnpm start:dev
+```
+
+서버가 `http://localhost:3003` 에서 실행됩니다.
 
 ## 테스트
 
@@ -139,4 +149,10 @@ pnpm lint
 
 # 포맷
 pnpm format
+
+# Prisma 클라이언트 생성
+pnpm prisma:generate
+
+# 스키마 변경 후 DB에 반영
+pnpm prisma:migrate
 ```

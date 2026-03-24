@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
-import {SystemModule} from "./modules/system/system.module";
+import { SystemModule } from './modules/system/system.module';
+import { PrismaModule } from './common/prisma/prisma.module';
 
 @Module({
   imports: [
-      SystemModule,
+    PrismaModule,
+    SystemModule,
   ],
   controllers: [],
   providers: [],

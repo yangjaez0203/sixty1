@@ -4,6 +4,7 @@ dist/
 .cache/
 *.tsbuildinfo
 
+
 # Yarn
 .yarn/cache
 .yarn/unplugged
@@ -30,7 +31,6 @@ yarn-error.log*
 
 # Environment files
 .env
-.env.local
 .env.*.local
 
 # IDE
