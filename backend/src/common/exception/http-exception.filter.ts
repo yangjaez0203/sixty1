@@ -29,24 +29,19 @@ export class HttpExceptionFilter implements ExceptionFilter {
         message: string;
         data?: unknown;
       };
-      const payload: Record<string, unknown> = {
-        code: body.code,
-        message: body.message,
-      };
+      const payload: Record<string, unknown> = { code: body.code, message: body.message };
       if (body.data !== undefined) payload.data = body.data;
       response.status(status).json(payload);
       return;
     }
 
-    const code =
-      HTTP_STATUS_TO_CODE[status as HttpStatus] ??
-      ErrorCode.INTERNAL_SERVER_ERROR;
+    const code = HTTP_STATUS_TO_CODE[status as HttpStatus] ?? ErrorCode.INTERNAL_SERVER_ERROR;
     const exceptionResponse = exception.getResponse();
     const message =
       typeof exceptionResponse === 'string'
         ? exceptionResponse
-        : (((exceptionResponse as Record<string, unknown>).message as string) ??
-          exception.message);
+        : ((exceptionResponse as Record<string, unknown>).message as string) ??
+          exception.message;
 
     response.status(status).json({ code, message });
   }
