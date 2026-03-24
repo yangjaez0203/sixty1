@@ -57,8 +57,8 @@ responses:
                   example: "https://bucket.s3.ap-northeast-2.amazonaws.com/logs/user-123/2026/03/24/uuid.mp4?X-Amz-..."
                 key:
                   type: string
-                  description: "S3 객체 키 (경로: logs/{userId}/{YYYY}/{MM}/{DD}/{uuid}.ext)"
-                  example: "logs/user-123/2026/03/24/f4a2389d-86df-4908-827e-50ac9823d5b9.mp4"
+                  description: "S3 객체 키 (경로: logs/{userId}/{uuid}.ext)"
+                  example: "logs/user-123/f4a2389d-86df-4908-827e-50ac9823d5b9.mp4"
   '400':
     description: 잘못된 요청
     content:
