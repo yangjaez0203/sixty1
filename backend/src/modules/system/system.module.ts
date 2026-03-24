@@ -1,7 +1,7 @@
-import {Module} from "@nestjs/common";
-import {SystemController} from "./presentation/system.controller";
+import { Module } from '@nestjs/common';
+import { SystemController } from './presentation/system.controller';
 
 @Module({
-    controllers: [SystemController],
+  controllers: [SystemController],
 })
 export class SystemModule {}
