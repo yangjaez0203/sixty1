@@ -54,3 +54,4 @@ backend/prisma/seed/
 *.swp
 *.swo
 *~
+backend/.env.local
