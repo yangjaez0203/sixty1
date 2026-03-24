@@ -1,10 +1,17 @@
 import { createHash, randomUUID } from 'crypto';
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { OAuthProvider, User } from '@prisma/client';
 import { JwtPayload } from '../../../common/decorators/current-user.decorator';
 import { UserService } from '../../user/application/user.service';
-import { AuthTokensResponseDto, UserProfileResponseDto } from '../presentation/dto/auth-tokens.response.dto';
+import {
+  AuthTokensResponseDto,
+  UserProfileResponseDto,
+} from '../presentation/dto/auth-tokens.response.dto';
 import { OAuthClient } from '../infrastructure/oauth.client';
 import { RefreshTokenRepository } from '../infrastructure/refresh-token.repository';
 

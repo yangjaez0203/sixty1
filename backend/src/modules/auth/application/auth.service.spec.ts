@@ -77,9 +77,7 @@ describe('AuthService', () => {
       expect(result.refreshToken).toBeDefined();
       expect(result.user.id).toBe('user-1');
       expect(result.user.email).toBe('test@example.com');
-      expect(oAuthClient.verifyIdToken).toHaveBeenCalledWith(
-        'valid-id-token',
-      );
+      expect(oAuthClient.verifyIdToken).toHaveBeenCalledWith('valid-id-token');
       expect(userService.findOrCreateByProvider).toHaveBeenCalledWith({
         email: 'test@example.com',
         name: 'Test User',
@@ -195,5 +193,4 @@ describe('AuthService', () => {
       expect(refreshTokenRepository.revoke).not.toHaveBeenCalled();
     });
   });
-
 });

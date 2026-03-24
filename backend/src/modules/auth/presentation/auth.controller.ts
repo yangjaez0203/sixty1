@@ -47,7 +47,9 @@ export class AuthController {
   @Post('logout')
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard)
-  async logout(@Body() dto: RefreshTokenRequestDto): Promise<ApiResponse<null>> {
+  async logout(
+    @Body() dto: RefreshTokenRequestDto,
+  ): Promise<ApiResponse<null>> {
     await this.authService.logout(dto.refreshToken);
     return ApiResponse.of(null);
   }

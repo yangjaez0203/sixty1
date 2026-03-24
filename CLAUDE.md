@@ -27,6 +27,32 @@ docs/              # API 문서 (OpenAPI 3.0 + Redocly)
 
 - `/api/*` → backend:8080 (prefix 제거)
 
+## 모듈 레이어 구조
+
+`src/modules/` 하위 각 도메인 모듈은 다음 레이어로 구성한다.
+
+```
+modules/{domain}/
+├── application/          # 비즈니스 로직
+│   ├── {domain}.service.ts
+│   └── {domain}.service.spec.ts
+├── infrastructure/       # 외부 의존성 (DB, 외부 API 등) — 필요한 경우
+│   ├── {entity}.repository.ts          # 추상 클래스
+│   └── {entity}-prisma.repository.ts   # 구현체
+├── presentation/         # HTTP 레이어
+│   ├── dto/              # Request / Response DTO, 커스텀 파이프
+│   └── {domain}.controller.ts
+└── {domain}.module.ts
+```
+
+### 규칙
+
+- **application**: 순수 비즈니스 로직만 담는다. HTTP, DB에 직접 의존하지 않는다.
+- **infrastructure**: DB 접근, 외부 API 호출 등 외부 의존성을 구현한다. 추상 클래스를 두고 구현체를 분리한다.
+- **presentation**: HTTP 요청/응답 처리만 담는다. 비즈니스 로직을 포함하지 않는다.
+  - DTO와 커스텀 파이프는 `presentation/dto/`에 함께 위치한다.
+- infrastructure가 필요 없는 단순 모듈은 생략할 수 있다.
+
 ## 패키지 매니저
 
 **pnpm만 사용한다.** `npm install`, `yarn` 등 다른 패키지 매니저는 절대 사용하지 않는다.
