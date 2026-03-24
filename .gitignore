@@ -4,6 +4,7 @@ dist/
 .cache/
 *.tsbuildinfo
 
+
 # Yarn
 .yarn/cache
 .yarn/unplugged
@@ -46,6 +47,9 @@ yarn-error.log*
 # Windows
 Thumbs.db
 ehthumbs.db
+
+# Prisma
+backend/prisma/seed/
 
 # Misc
 *.swp

@@ -18,7 +18,7 @@ backend/                    # NestJS (Fastify) 서버 — 포트 8080
 │   └── workers/            # FFmpeg 워커 (영상 처리)
 ├── test/                   # e2e 테스트
 └── package.json
-frontend/          # 프론트엔드 (미설정)
+frontend/          # 모바일 앱 (React Native / Expo)
 nginx/             # Nginx 리버스 프록시 설정
 docs/              # API 문서 (OpenAPI 3.0 + Redocly)
 ```
@@ -26,7 +26,6 @@ docs/              # API 문서 (OpenAPI 3.0 + Redocly)
 ### 라우팅 (Nginx)
 
 - `/api/*` → backend:8080 (prefix 제거)
-- `/*` → frontend:3000
 
 ## Build & Run
 
@@ -35,22 +34,22 @@ docs/              # API 문서 (OpenAPI 3.0 + Redocly)
 docker compose up --build -d
 
 # 백엔드 의존성 설치
-cd backend && yarn install
+cd backend && pnpm install
 
 # 백엔드 개발 서버 실행 (포트 3003)
-cd backend && yarn start:dev
+cd backend && pnpm start:dev
 
 # 백엔드 테스트
-cd backend && yarn test
+cd backend && pnpm test
 
 # e2e 테스트
-cd backend && yarn test:e2e
+cd backend && pnpm test:e2e
 
 # 린트
-cd backend && yarn lint
+cd backend && pnpm lint
 
 # API 문서 미리보기
-npx @redocly/cli preview -p 4000
+cd docs && npx @redocly/cli preview -p 4000
 ```
 
 ## Commit Convention
@@ -76,7 +75,7 @@ npx @redocly/cli preview -p 4000
 
 ### PR Check (`.github/workflows/pr-check.yml`)
 - PR 오픈 시 변경 경로 기반 조건부 빌드
-- `backend/**` → Node.js 빌드 + 테스트 (yarn install → yarn build → yarn test)
+- `backend/**` → Node.js 빌드 + 테스트 (pnpm install → pnpm build → pnpm test)
 - `docs/**` → Redocly lint + 문서 빌드
 - `frontend/**` → 미설정 (프레임워크 선택 후 추가)
 
