@@ -9,7 +9,32 @@ servers:
 tags:
   - name: system
     description: System related endpoints
+  - name: upload
+    description: 파일 업로드 관련 엔드포인트
 paths:
   /system/health:
     get:
       $ref: './system/health.yaml'
+  /upload/presigned-url:
+    post:
+      $ref: './upload/presigned-url.yaml'
+
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          description: 에러 코드 (UPPER_SNAKE_CASE)
+          example: "INVALID_REQUEST"
+        message:
+          type: string
+          description: 에러 상세 메시지
+          example: "userId must be a string"
+        data:
+          description: 부가적인 에러 정보 (optional)
+          nullable: true

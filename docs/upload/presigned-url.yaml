@@ -1,0 +1,99 @@
+tags:
+  - upload
+summary: Pre-signed URL 발급
+description: |
+  S3에 영상 파일을 직접 업로드하기 위한 Pre-signed URL을 발급합니다.
+
+  **업로드 흐름:**
+  1. 이 API를 호출하여 `uploadUrl`과 `key`를 수신
+  2. `uploadUrl`로 `PUT` 요청을 통해 S3에 영상 직접 업로드
+  3. 업로드 완료 후 `key`를 서버에 저장 (트랙 생성 등 후속 처리에 사용)
+
+  Pre-signed URL의 유효 시간은 **5분**입니다.
+operationId: getPresignedUrl
+security: []
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - userId
+          - fileName
+          - contentType
+        properties:
+          userId:
+            type: string
+            description: 업로드 요청 유저 ID
+            example: "user-123"
+          fileName:
+            type: string
+            description: 업로드할 파일 이름 (확장자 포함)
+            example: "my-video.mp4"
+          contentType:
+            type: string
+            description: 파일의 MIME 타입
+            enum:
+              - video/mp4
+              - video/quicktime
+              - video/x-msvideo
+              - video/webm
+            example: "video/mp4"
+responses:
+  '201':
+    description: Pre-signed URL 발급 성공
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            data:
+              type: object
+              properties:
+                uploadUrl:
+                  type: string
+                  description: S3 직접 업로드용 Pre-signed URL (유효시간 5분)
+                  example: "https://bucket.s3.ap-northeast-2.amazonaws.com/logs/user-123/2026/03/24/uuid.mp4?X-Amz-..."
+                key:
+                  type: string
+                  description: "S3 객체 키 (경로: logs/{userId}/{YYYY}/{MM}/{DD}/{uuid}.ext)"
+                  example: "logs/user-123/2026/03/24/f4a2389d-86df-4908-827e-50ac9823d5b9.mp4"
+  '400':
+    description: 잘못된 요청
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - code
+            - message
+          properties:
+            code:
+              type: string
+              description: 에러 코드
+              enum:
+                - INVALID_REQUEST
+                - INVALID_FILE_TYPE
+            message:
+              type: string
+              description: 에러 상세 메시지
+        examples:
+          INVALID_FILE_TYPE:
+            summary: 허용되지 않는 파일 형식
+            value:
+              code: "INVALID_FILE_TYPE"
+              message: "Unsupported file type."
+          INVALID_REQUEST:
+            summary: 필수 필드 누락
+            value:
+              code: "INVALID_REQUEST"
+              message: "userId must be a string"
+          INVALID_REQUEST_WITH_DATA:
+            summary: 부가 데이터 포함 예시
+            value:
+              code: "INVALID_REQUEST"
+              message: "Validation failed."
+              data:
+                field: "contentType"
+                rejected: "image/png"
