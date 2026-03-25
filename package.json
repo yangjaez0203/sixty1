@@ -1,0 +1,10 @@
+{
+  "name": "sixty1",
+  "version": "0.0.1",
+  "private": true,
+  "packageManager": "pnpm@10.33.0",
+  "scripts": {
+    "backend": "pnpm --filter backend",
+    "dev:backend": "pnpm --filter backend start:dev"
+  }
+}
