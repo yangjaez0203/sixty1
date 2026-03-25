@@ -71,6 +71,30 @@ cd docs && npx @redocly/cli preview -p 4000
 - **Media:** FFmpeg 워커, MP4 출력 (HLS 확장 예정)
 - **Frontend:** TBD
 
+## Branch Strategy
+
+```
+prod         # 배포 브랜치 (태그 기반 배포)
+main         # 통합 브랜치
+├── backend  # 백엔드 장기 개발 브랜치
+│    └── TSK-xx  # 백엔드 피처 브랜치
+└── frontend # 프론트엔드 장기 개발 브랜치
+     └── TSK-xx  # 프론트엔드 피처 브랜치
+```
+
+**흐름:**
+1. 피처 브랜치(`TSK-xx`) → `backend` 또는 `frontend`로 PR 머지
+2. 일정 시점에 `backend` / `frontend` → `main`으로 머지
+3. `main` → `prod` 배포 태그 push → 자동 배포
+
+**공통 설정 변경 시 (루트 package.json, docker-compose, nginx 등):**
+- `TSK-xx` → `main` 직접 PR
+- 머지 후 `backend`, `frontend` 브랜치에도 즉시 반영
+  ```bash
+  git checkout backend && git merge main
+  git checkout frontend && git merge main
+  ```
+
 ## CI/CD
 
 ### PR Check (`.github/workflows/pr-check.yml`)
