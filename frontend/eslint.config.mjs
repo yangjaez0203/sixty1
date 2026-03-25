@@ -2,30 +2,32 @@
 import baseConfig from '../eslint.base.config.mjs';
 import tseslint from 'typescript-eslint';
 import globals from 'globals';
+import pluginReact from 'eslint-plugin-react';
+import pluginReactHooks from 'eslint-plugin-react-hooks';
 
 export default tseslint.config(
   {
     ignores: ['eslint.config.mjs'],
   },
   ...baseConfig,
-  ...tseslint.configs.recommendedTypeChecked,
+  pluginReact.configs.flat.recommended,
   {
+    plugins: { 'react-hooks': pluginReactHooks },
+    rules: {
+      ...pluginReactHooks.configs.recommended.rules,
+      'react/react-in-jsx-scope': 'off',
+    },
     languageOptions: {
       globals: {
-        ...globals.node,
-        ...globals.jest,
+        ...globals.browser,
       },
-      sourceType: 'commonjs',
       parserOptions: {
         projectService: true,
         tsconfigRootDir: import.meta.dirname,
       },
     },
-  },
-  {
-    rules: {
-      '@typescript-eslint/no-floating-promises': 'warn',
-      '@typescript-eslint/no-unsafe-argument': 'warn',
+    settings: {
+      react: { version: 'detect' },
     },
   },
 );
