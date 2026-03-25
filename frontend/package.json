@@ -6,7 +6,8 @@
     "start": "expo start",
     "android": "expo run:android --device",
     "ios": "expo run:ios --device",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "lint": "eslint \"{src,app}/**/*.{ts,tsx}\""
   },
   "dependencies": {
     "@react-native-google-signin/google-signin": "^16.1.2",
@@ -23,7 +24,12 @@
   },
   "devDependencies": {
     "@types/react": "~19.2.2",
-    "typescript": "~5.9.2"
+    "eslint": "^9.39.4",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "globals": "^17.4.0",
+    "typescript": "~5.9.2",
+    "typescript-eslint": "^8.57.2"
   },
   "private": true
 }
