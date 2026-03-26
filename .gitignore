@@ -55,3 +55,4 @@ backend/prisma/seed/
 *.swo
 *~
 backend/.env.local
+docs/redoc-static.html
