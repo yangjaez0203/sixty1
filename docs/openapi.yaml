@@ -36,5 +36,7 @@ components:
           description: 에러 상세 메시지
           example: "userId must be a string"
         data:
+          type: object
           description: 부가적인 에러 정보 (optional)
+          additionalProperties: true
           nullable: true

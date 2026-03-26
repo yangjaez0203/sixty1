@@ -64,20 +64,7 @@ responses:
     content:
       application/json:
         schema:
-          type: object
-          required:
-            - code
-            - message
-          properties:
-            code:
-              type: string
-              description: 에러 코드
-              enum:
-                - INVALID_REQUEST
-                - INVALID_FILE_TYPE
-            message:
-              type: string
-              description: 에러 상세 메시지
+          $ref: '#/components/schemas/ErrorResponse'
         examples:
           INVALID_FILE_TYPE:
             summary: 허용되지 않는 파일 형식
