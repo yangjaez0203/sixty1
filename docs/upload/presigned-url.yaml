@@ -64,7 +64,7 @@ responses:
     content:
       application/json:
         schema:
-          $ref: '#/components/schemas/ErrorResponse'
+          $ref: '../openapi.yaml#/components/schemas/ErrorResponse'
         examples:
           INVALID_FILE_TYPE:
             summary: 허용되지 않는 파일 형식
