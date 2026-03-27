@@ -19,24 +19,26 @@ export class UserPrismaRepository extends UserRepository {
   ): Promise<User | null> {
     const account = await this.prisma.providerAccount.findUnique({
       where: { provider_providerId: { provider, providerId } },
-      include: { user: true },
     });
-    return account?.user ?? null;
+    if (!account) return null;
+    return this.prisma.user.findUnique({ where: { id: account.userId } });
   }
 
   async createWithProvider(params: CreateWithProviderParams): Promise<User> {
-    return this.prisma.user.create({
+    const user = await this.prisma.user.create({
       data: {
         email: params.email,
         name: params.name,
         picture: params.picture,
-        providerAccounts: {
-          create: {
-            provider: params.provider,
-            providerId: params.providerId,
-          },
-        },
       },
     });
+    await this.prisma.providerAccount.create({
+      data: {
+        provider: params.provider,
+        providerId: params.providerId,
+        userId: user.id,
+      },
+    });
+    return user;
   }
 }
