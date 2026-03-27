@@ -53,7 +53,7 @@ export class AuthController {
   async me(
     @CurrentUser() user: JwtPayload,
   ): Promise<ApiResponse<UserProfileResponseDto>> {
-    const profile = await this.authService.getProfile(user.sub);
+    const profile = await this.authService.getProfile(user.userId);
     return ApiResponse.of(profile);
   }
 }

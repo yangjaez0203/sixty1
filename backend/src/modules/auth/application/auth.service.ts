@@ -80,7 +80,7 @@ export class AuthService {
   }
 
   private async issueTokens(user: User): Promise<AuthTokensResponseDto> {
-    const payload: JwtPayload = { sub: user.id, email: user.email };
+    const payload: JwtPayload = { userId: user.id, email: user.email };
 
     const accessToken = this.jwtService.sign(payload, {
       expiresIn: this.parseExpiration(
