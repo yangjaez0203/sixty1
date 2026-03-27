@@ -31,8 +31,9 @@ model ProviderAccount {
   provider   String
   providerId String   @map("provider_id")
   userId     String   @db.Uuid @map("user_id")
-  user       User     @relation(fields: [userId], references: [id])
-  createdAt  DateTime @default(now()) @map("created_at")
+  user       User      @relation(fields: [userId], references: [id])
+  createdAt  DateTime  @default(now()) @map("created_at")
+  deletedAt  DateTime? @map("deleted_at")
 
   @@unique([provider, providerId])
   @@map("provider_account")
