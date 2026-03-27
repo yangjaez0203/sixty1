@@ -27,6 +27,10 @@ docs/              # API 문서 (OpenAPI 3.0 + Redocly)
 
 - `/api/*` → backend:8080 (prefix 제거)
 
+## 패키지 매니저
+
+**pnpm만 사용한다.** `npm install`, `yarn` 등 다른 패키지 매니저는 절대 사용하지 않는다.
+
 ## Build & Run
 
 ```bash
