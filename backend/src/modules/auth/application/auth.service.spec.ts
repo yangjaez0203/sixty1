@@ -5,7 +5,7 @@ import { NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { OAuthProvider } from '@prisma/client';
 import { AuthService } from './auth.service';
 import { UserService } from '../../user/application/user.service';
-import { GoogleOAuthClient } from '../infrastructure/google-oauth.client';
+import { OAuthClient } from '../infrastructure/oauth.client';
 import { RefreshTokenRepository } from '../infrastructure/refresh-token.repository';
 
 const mockUser = {
@@ -19,7 +19,7 @@ const mockUser = {
 
 describe('AuthService', () => {
   let service: AuthService;
-  let googleOAuthClient: jest.Mocked<GoogleOAuthClient>;
+  let oAuthClient: jest.Mocked<OAuthClient>;
   let userService: jest.Mocked<UserService>;
   let jwtService: jest.Mocked<JwtService>;
   let refreshTokenRepository: jest.Mocked<RefreshTokenRepository>;
@@ -29,7 +29,7 @@ describe('AuthService', () => {
       providers: [
         AuthService,
         {
-          provide: GoogleOAuthClient,
+          provide: OAuthClient,
           useValue: { verifyIdToken: jest.fn() },
         },
         {
@@ -53,15 +53,15 @@ describe('AuthService', () => {
     }).compile();
 
     service = module.get(AuthService);
-    googleOAuthClient = module.get(GoogleOAuthClient);
+    oAuthClient = module.get(OAuthClient);
     userService = module.get(UserService);
     jwtService = module.get(JwtService);
     refreshTokenRepository = module.get(RefreshTokenRepository);
   });
 
-  describe('googleLogin', () => {
+  describe('login', () => {
     it('Google ID Token을 검증하고 토큰 쌍을 발급한다', async () => {
-      googleOAuthClient.verifyIdToken.mockResolvedValue({
+      oAuthClient.verifyIdToken.mockResolvedValue({
         email: 'test@example.com',
         name: 'Test User',
         picture: 'https://example.com/photo.jpg',
@@ -71,13 +71,13 @@ describe('AuthService', () => {
       jwtService.sign.mockReturnValue('access-token');
       refreshTokenRepository.create.mockResolvedValue({} as any);
 
-      const result = await service.googleLogin('valid-id-token');
+      const result = await service.login('valid-id-token');
 
       expect(result.accessToken).toBe('access-token');
       expect(result.refreshToken).toBeDefined();
       expect(result.user.id).toBe('user-1');
       expect(result.user.email).toBe('test@example.com');
-      expect(googleOAuthClient.verifyIdToken).toHaveBeenCalledWith(
+      expect(oAuthClient.verifyIdToken).toHaveBeenCalledWith(
         'valid-id-token',
       );
       expect(userService.findOrCreateByProvider).toHaveBeenCalledWith({

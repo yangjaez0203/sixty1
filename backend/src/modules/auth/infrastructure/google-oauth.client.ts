@@ -1,22 +1,17 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { OAuth2Client } from 'google-auth-library';
-
-export interface GoogleUserInfo {
-  email: string;
-  name: string;
-  picture?: string;
-  providerId: string;
-}
+import { OAuthClient, OAuthUserInfo } from './oauth.client';
 
 @Injectable()
-export class GoogleOAuthClient {
+export class GoogleOAuthClient extends OAuthClient {
   private readonly client: OAuth2Client;
 
   constructor() {
+    super();
     this.client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
   }
 
-  async verifyIdToken(idToken: string): Promise<GoogleUserInfo> {
+  async verifyIdToken(idToken: string): Promise<OAuthUserInfo> {
     try {
       const ticket = await this.client.verifyIdToken({
         idToken,

@@ -24,10 +24,10 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('google')
-  async googleLogin(
+  async login(
     @Body() dto: GoogleLoginRequestDto,
   ): Promise<ApiResponse<AuthTokensResponseDto>> {
-    const result = await this.authService.googleLogin(dto.idToken);
+    const result = await this.authService.login(dto.idToken);
     return ApiResponse.of(result);
   }
 

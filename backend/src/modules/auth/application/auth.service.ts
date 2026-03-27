@@ -12,20 +12,20 @@ import {
   AuthTokensResponseDto,
   UserProfileResponseDto,
 } from '../presentation/dto/auth-tokens.response.dto';
-import { GoogleOAuthClient } from '../infrastructure/google-oauth.client';
+import { OAuthClient } from '../infrastructure/oauth.client';
 import { RefreshTokenRepository } from '../infrastructure/refresh-token.repository';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly googleOAuthClient: GoogleOAuthClient,
+    private readonly oAuthClient: OAuthClient,
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
     private readonly refreshTokenRepository: RefreshTokenRepository,
   ) {}
 
-  async googleLogin(idToken: string): Promise<AuthTokensResponseDto> {
-    const googleUser = await this.googleOAuthClient.verifyIdToken(idToken);
+  async login(idToken: string): Promise<AuthTokensResponseDto> {
+    const googleUser = await this.oAuthClient.verifyIdToken(idToken);
 
     const user = await this.userService.findOrCreateByProvider({
       email: googleUser.email,
