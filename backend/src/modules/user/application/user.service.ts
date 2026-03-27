@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { User } from '@prisma/client';
+import { OAuthProvider, User } from '@prisma/client';
 import { UserRepository } from '../infrastructure/user.repository';
 
 export interface FindOrCreateByProviderParams {
   email: string;
   name: string;
   picture?: string;
-  provider: string;
+  provider: OAuthProvider;
   providerId: string;
 }
 

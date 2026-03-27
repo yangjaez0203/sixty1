@@ -5,7 +5,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '@prisma/client';
+import { OAuthProvider, User } from '@prisma/client';
 import { JwtPayload } from '../../../common/decorators/current-user.decorator';
 import { UserService } from '../../user/application/user.service';
 import {
@@ -31,7 +31,7 @@ export class AuthService {
       email: googleUser.email,
       name: googleUser.name,
       picture: googleUser.picture,
-      provider: 'google',
+      provider: OAuthProvider.GOOGLE,
       providerId: googleUser.providerId,
     });
 

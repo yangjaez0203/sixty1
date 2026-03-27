@@ -2,6 +2,7 @@ import { createHash, randomUUID } from 'crypto';
 import { Test, TestingModule } from '@nestjs/testing';
 import { JwtService } from '@nestjs/jwt';
 import { NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { OAuthProvider } from '@prisma/client';
 import { AuthService } from './auth.service';
 import { UserService } from '../../user/application/user.service';
 import { GoogleOAuthClient } from '../infrastructure/google-oauth.client';
@@ -83,7 +84,7 @@ describe('AuthService', () => {
         email: 'test@example.com',
         name: 'Test User',
         picture: 'https://example.com/photo.jpg',
-        provider: 'google',
+        provider: OAuthProvider.GOOGLE,
         providerId: 'google-123',
       });
     });

@@ -1,3 +1,4 @@
+import { OAuthProvider } from '@prisma/client';
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserService } from './user.service';
 import { UserRepository } from '../infrastructure/user.repository';
@@ -57,7 +58,7 @@ describe('UserService', () => {
       email: 'test@example.com',
       name: 'Test User',
       picture: 'https://example.com/photo.jpg',
-      provider: 'google',
+      provider: OAuthProvider.GOOGLE,
       providerId: 'google-123',
     };
 

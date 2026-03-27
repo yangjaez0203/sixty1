@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { User } from '@prisma/client';
+import { OAuthProvider, User } from '@prisma/client';
 import { PrismaService } from '../../../common/prisma/prisma.service';
 import { CreateWithProviderParams, UserRepository } from './user.repository';
 
@@ -14,7 +14,7 @@ export class UserPrismaRepository extends UserRepository {
   }
 
   async findByProviderAndProviderId(
-    provider: string,
+    provider: OAuthProvider,
     providerId: string,
   ): Promise<User | null> {
     const account = await this.prisma.providerAccount.findUnique({

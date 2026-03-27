@@ -22,11 +22,15 @@ model User {
   @@map("user")
 }
 
+enum OAuthProvider {
+  GOOGLE
+}
+
 // FK는 코드 레벨에서만 관리 (DB 레벨 FK 미사용)
 model ProviderAccount {
-  id         String    @id @default(uuid()) @db.Uuid
-  provider   String
-  providerId String    @map("provider_id")
+  id         String        @id @default(uuid()) @db.Uuid
+  provider   OAuthProvider
+  providerId String        @map("provider_id")
   userId     String    @db.Uuid @map("user_id")
   createdAt  DateTime  @default(now()) @map("created_at")
   deletedAt  DateTime? @map("deleted_at")
