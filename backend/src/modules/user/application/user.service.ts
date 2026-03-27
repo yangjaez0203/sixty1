@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { OAuthProvider, User } from '@prisma/client';
 import { UserRepository } from '../infrastructure/user.repository';
 
@@ -16,6 +16,14 @@ export class UserService {
 
   async findById(id: string): Promise<User | null> {
     return this.userRepository.findById(id);
+  }
+
+  async getProfile(id: string): Promise<User> {
+    const user = await this.userRepository.findById(id);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    return user;
   }
 
   async findOrCreateByProvider(

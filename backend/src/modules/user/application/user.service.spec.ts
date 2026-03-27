@@ -1,4 +1,5 @@
 import { OAuthProvider } from '@prisma/client';
+import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserService } from './user.service';
 import { UserRepository } from '../infrastructure/user.repository';
@@ -50,6 +51,24 @@ describe('UserService', () => {
       const result = await service.findById('nonexistent');
 
       expect(result).toBeNull();
+    });
+  });
+
+  describe('getProfile', () => {
+    it('사용자 프로필을 반환한다', async () => {
+      repository.findById.mockResolvedValue(mockUser);
+
+      const result = await service.getProfile('user-1');
+
+      expect(result).toEqual(mockUser);
+    });
+
+    it('존재하지 않는 사용자는 NotFoundException을 던진다', async () => {
+      repository.findById.mockResolvedValue(null);
+
+      await expect(service.getProfile('nonexistent')).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 

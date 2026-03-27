@@ -1,7 +1,7 @@
 import { createHash, randomUUID } from 'crypto';
 import { Test, TestingModule } from '@nestjs/testing';
 import { JwtService } from '@nestjs/jwt';
-import { NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { UnauthorizedException } from '@nestjs/common';
 import { OAuthProvider } from '@prisma/client';
 import { AuthService } from './auth.service';
 import { UserService } from '../../user/application/user.service';
@@ -196,26 +196,4 @@ describe('AuthService', () => {
     });
   });
 
-  describe('getProfile', () => {
-    it('사용자 프로필을 반환한다', async () => {
-      userService.findById.mockResolvedValue(mockUser);
-
-      const result = await service.getProfile('user-1');
-
-      expect(result).toEqual({
-        id: 'user-1',
-        email: 'test@example.com',
-        name: 'Test User',
-        picture: 'https://example.com/photo.jpg',
-      });
-    });
-
-    it('존재하지 않는 사용자는 NotFoundException을 던진다', async () => {
-      userService.findById.mockResolvedValue(null);
-
-      await expect(service.getProfile('nonexistent')).rejects.toThrow(
-        NotFoundException,
-      );
-    });
-  });
 });
