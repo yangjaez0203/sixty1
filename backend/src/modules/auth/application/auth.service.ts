@@ -55,7 +55,7 @@ export class AuthService {
 
     const user = await this.userService.findById(storedToken.userId);
     if (!user) {
-      throw new UnauthorizedException('User not found');
+      throw new NotFoundException('User not found');
     }
 
     return this.issueTokens(user);
