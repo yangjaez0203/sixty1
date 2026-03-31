@@ -4,7 +4,7 @@
 
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
-CREATE TYPE "OAuthProvider" AS ENUM ('GOOGLE');
+CREATE TYPE "auth_oauth_provider" AS ENUM ('GOOGLE');
 
 CREATE TABLE "user" (
     "id"         UUID        NOT NULL DEFAULT gen_random_uuid(),
@@ -22,7 +22,7 @@ CREATE UNIQUE INDEX "user_email_key" ON "user"("email");
 -- FK는 코드 레벨에서만 관리 (DB 레벨 FK 미사용)
 CREATE TABLE "provider_account" (
     "id"          UUID          NOT NULL DEFAULT gen_random_uuid(),
-    "provider"    "OAuthProvider" NOT NULL,
+    "provider"    "auth_oauth_provider" NOT NULL,
     "provider_id" TEXT          NOT NULL,
     "user_id"     UUID          NOT NULL,
     "created_at"  TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
