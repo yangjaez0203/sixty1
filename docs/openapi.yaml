@@ -9,7 +9,17 @@ servers:
 tags:
   - name: system
     description: System related endpoints
+  - name: upload
+    description: 파일 업로드 관련 엔드포인트
 paths:
   /system/health:
     get:
       $ref: './system/health.yaml'
+  /upload/presigned-url:
+    post:
+      $ref: './upload/presigned-url.yaml'
+
+components:
+  schemas:
+    ErrorResponse:
+      $ref: './_schema/common/error-response.yaml#/ErrorResponse'
