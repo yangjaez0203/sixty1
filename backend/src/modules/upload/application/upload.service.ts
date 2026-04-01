@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { StorageService } from '../../../common/storage/storage.service';
-import { GetPresignedUrlResponseDto } from '../presentation/dto/get-presigned-url.dto';
 import { v4 as uuidv4 } from 'uuid';
 import * as path from 'path';
 
@@ -12,7 +11,7 @@ export class UploadService {
     userId: string,
     fileName: string,
     contentType: string,
-  ): Promise<GetPresignedUrlResponseDto> {
+  ): Promise<{ uploadUrl: string; key: string }> {
     const ext = path.extname(fileName);
     const key = `logs/${userId}/${uuidv4()}${ext}`;
 
