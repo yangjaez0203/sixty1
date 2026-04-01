@@ -11,13 +11,12 @@ export class UploadController {
   @Post('presigned-url')
   @HttpCode(HttpStatus.CREATED)
   async getPresignedUrl(
-    @Body() dto: GetPresignedUrlDto,
-    @Body('contentType', ValidateVideoContentTypePipe) contentType: string,
+    @Body(ValidateVideoContentTypePipe) dto: GetPresignedUrlDto,
   ): Promise<ApiResponse<GetPresignedUrlResponseDto>> {
     const result = await this.uploadService.getPresignedUploadUrl(
       dto.userId,
       dto.fileName,
-      contentType,
+      dto.contentType,
     );
     return ApiResponse.of(result);
   }

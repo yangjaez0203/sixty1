@@ -11,8 +11,8 @@ const ALLOWED_CONTENT_TYPES = [
 
 @Injectable()
 export class ValidateVideoContentTypePipe implements PipeTransform {
-  transform(value: string): string {
-    if (!ALLOWED_CONTENT_TYPES.includes(value)) {
+  transform(value: { contentType?: string }): typeof value {
+    if (!ALLOWED_CONTENT_TYPES.includes(value?.contentType ?? '')) {
       throw new AppException(
         ErrorCode.INVALID_FILE_TYPE,
         'Unsupported file type.',
